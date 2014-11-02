@@ -1,4 +1,3 @@
-stakehouse
-==========
+Work in progress...
 
-A standard for CA-less association of same-author URLs
+See [the wiki](https://github.com/hidden-id/stakehouse/wiki)
