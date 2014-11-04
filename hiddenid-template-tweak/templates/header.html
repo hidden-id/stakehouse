@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{profile.nickname}}'s HiddenID server">
+    <meta name="author" content="https://hidden-id.github.io">
+    <link rel="icon" href="/static/img/HiddenID-icon.png">
+    {{#profile.stakes}}
+      <link rel="stake" href="{{.}}">
+    {{/profile.stakes}}
+    {{#endpoint}}
+      <link rel="openid.server" href="{{.}}">
+    {{/endpoint}}
+    {{#yadis}}
+      <meta http-equiv="x-xrds-location" content="{{.}}">
+    {{/yadis}}
+    <title>{{title}} - {{profile.nickname}}'s HiddenID</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/ownopenid.css" rel="stylesheet">
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="/static/js/html5shiv.min.js"></script>
+      <script src="/static/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">&#128526; HiddenID</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li{{#is_home}} class="active"{{/is_home}}><a href="{{hiddenid}}">{{profile.nickname}}</a></li>
+            {{#logged_in}}
+              <li{{#is_trusted}} class="active"{{/is_trusted}}>
+                <a href="{{check_trusted_url}}">Trusted sites</a>
+              </li>
+            {{/logged_in}}
+          </ul>
+          {{^is_login}}
+            <form method="post" class="navbar-form navbar-right" role="form"
+                  action="{{#logged_in}}{{logout_url}}{{/logged_in}}{{^logged_in}}{{login_url}}{{/logged_in}}">
+              <input type="hidden" name="csrf_token" value="{{csrf_token}}">
+              <div class="form-group">
+                {{^logged_in}}
+                  <input type="password" name="password" id="menu_password"
+                      placeholder="Password" class="form-control">
+                  <button type="submit" class="btn btn-success">Login</button>
+                {{/logged_in}}
+                {{#logged_in}}
+                  <button type="submit" class="btn btn-danger">Logout</button>
+                {{/logged_in}}
+              </div>
+            </form>
+          {{/is_login}}
+          {{#logged_in}}
+            <ul class="nav navbar-nav navbar-right">
+              <li{{#is_password}} class="active"{{/is_password}}>
+                <a href="{{change_password_url}}">Change password</a>
+              </li>
+            </ul>
+          {{/logged_in}}
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+    {{#no_password}}
+      {{^is_password}}
+        <div class="row">
+          <div class="col-md-12">
+            <div class="alert alert-danger" role="alert">
+              <strong>Note:</strong> Please <a href="{{change_password_url}}">set your password</a>!
+            </div>
+          </div>
+        </div>
+      {{/is_password}}
+    {{/no_password}}
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2 col-sm-12">

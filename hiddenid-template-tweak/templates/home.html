@@ -1,0 +1,28 @@
+        {{> header}}
+          <h1>HiddenID profile: <small>{{profile.nickname}}</small></h1>
+            <div class="media">
+              {{#profile.avatar}}
+                <a class="pull-left" href="#">
+                  <img src="{{profile.avatar}}" alt="{{profile.nickname}}">
+                </a>
+              {{/profile.avatar}}
+              <div class="media-body">
+                <dl>
+                  {{#profile.description}}
+                    <dt>About {{profile.nickname}}:</dt>
+                    <dd>{{.}}</dd>
+                  {{/profile.description}}
+                  {{^profile.description}}
+                    <dt>Nickname:</dt>
+                    <dd>{{profile.nickname}}</dd>
+                  {{/profile.description}}
+                  {{#profile.homepage}}
+                    <dt>Homepage:</dt>
+                    <dd><a target="_blank" {{#profile.homepage-is-stake}}rel="stake" {{/profile.homepage-is-stake}}href="{{profile.homepage}}">{{profile.homepage}}</a></dd>
+                  {{/profile.homepage}}
+                </dl>
+              </div>
+            </div>
+          <p><a class="btn btn-primary btn-lg" role="button" target="_blank"
+                href="https://hidden-id.github.io">Learn more about HiddenID &raquo;</a></p>
+        {{> footer}}
